@@ -12,5 +12,6 @@ router.register('groups', GroupViewSet, basename='groups')
 
 urlpatterns = [
     path('v1/', include(router.urls)),
-    path('v1/api-token-auth/', obtain_auth_token),
+    path('v1/api-token-auth/', obtain_auth_token,
+         name='api-token-auth'),
 ]
