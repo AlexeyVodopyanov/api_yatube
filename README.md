@@ -56,7 +56,9 @@ python manage.py runserver
 
 ## Аутентификация
 
-### Получение токена
+Выполнить POST-запрос к ручке http://localhost:8000/api/v1/token/ передав поля username и password.
+
+Получение токена
 
 ```sh
 {
