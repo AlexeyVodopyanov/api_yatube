@@ -1,7 +1,7 @@
-from rest_framework import status, viewsets
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
 from posts.models import Comment, Group, Post
 from .permissions import IsAuthorOrReadOnly
@@ -28,12 +28,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         return Comment.objects.filter(post_id=self.kwargs['post_id'])
 
     def perform_create(self, serializer):
-        post_id = self.kwargs['post_id']
-        try:
-            post = Post.objects.get(id=post_id)
-        except Post.DoesNotExist:
-            return Response({"detail": "Post not found."},
-                            status=status.HTTP_400_BAD_REQUEST)
+        post = get_object_or_404(Post, id=self.kwargs['post_id'])
         serializer.save(author=self.request.user, post=post)
 
 
